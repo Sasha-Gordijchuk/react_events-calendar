@@ -1,10 +1,10 @@
 import React from 'react';
-import './App.css';
+import { Calendar } from './components/Calendar';
 
 export const App: React.FC = () => {
   return (
-    <div>
-      123
+    <div className="app">
+      <Calendar />
     </div>
   );
 };
