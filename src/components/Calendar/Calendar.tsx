@@ -1,12 +1,30 @@
+/* eslint-disable max-len */
 /* eslint-disable no-console */
 import React from 'react';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { getStringMonth } from '../../utils/getStringMonth';
 import { CalendarTable } from '../CalendarTable';
 
 export const Calendar: React.FC = () => {
   const today = new Date(Date.now());
+  const [currentMonth, setCurrentMonth] = useLocalStorage('month', today.getMonth());
+  const [currentYear] = useLocalStorage('year', today.getFullYear());
 
-  console.log(today);
+  const handleChangeMonthNext = () => {
+    if (currentMonth === 11) {
+      setCurrentMonth(0);
+    } else {
+      setCurrentMonth(currentMonth + 1);
+    }
+  };
+
+  const handleChangeMonthPrev = () => {
+    if (currentMonth === 0) {
+      setCurrentMonth(11);
+    } else {
+      setCurrentMonth(currentMonth - 1);
+    }
+  };
 
   return (
     <div className="calendar">
@@ -19,16 +37,30 @@ export const Calendar: React.FC = () => {
         </button>
 
         <div className="header__month">
-          <button type="button" className="header__arrow-button">{'<'}</button>
+          <button
+            type="button"
+            className="header__arrow-button"
+            onClick={() => handleChangeMonthPrev()}
+          >
+            {'<'}
+          </button>
           <p>
-            {`${getStringMonth(today.getMonth())} ${today.getFullYear()}`}
+            {`${getStringMonth(currentMonth)} ${currentYear}`}
           </p>
-          <button type="button" className="header__arrow-button">{'>'}</button>
+          <button
+            type="button"
+            className="header__arrow-button"
+            onClick={() => handleChangeMonthNext()}
+          >
+            {'>'}
+          </button>
         </div>
       </div>
 
       <CalendarTable
-        currentDate={today}
+        today={today}
+        currentMonth={currentMonth}
+        currentYear={currentYear}
       />
     </div>
   );

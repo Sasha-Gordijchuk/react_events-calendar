@@ -2,27 +2,33 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { getDaysInMonth } from '../../utils/getDaysInMonth';
-import { getStringMonth } from '../../utils/getStringMonth';
+import { getStartDay } from '../../utils/getStartDay';
 import { CalendarCell } from '../CalendarCell';
 
 interface Props {
-  currentDate: Date;
+  today: Date;
+  currentMonth: number;
+  currentYear: number;
 }
 
-export const CalendarTable: React.FC<Props> = ({ currentDate }) => {
+export const CalendarTable: React.FC<Props> = ({
+  today,
+  currentMonth,
+  currentYear,
+}) => {
   const days = [];
   const daysCount = getDaysInMonth(
-    getStringMonth(currentDate.getMonth()), currentDate.getFullYear(),
+    currentMonth, currentYear,
   );
+
+  console.log(today);
 
   for (let i = 0; i < daysCount; i++) {
     days.push(i + 1);
   }
 
-  console.log(days);
-
   return (
-    <table className="table table--start-day-0">
+    <table className={`table table--start-day-${getStartDay(currentMonth, currentYear)}`}>
       {days.map(day => (
         <CalendarCell
           key={day}
