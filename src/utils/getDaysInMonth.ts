@@ -3,22 +3,22 @@ import { isLeapYear } from './isLeapYear';
 
 export const getDaysInMonth = (month: Month, year: number) => {
   switch (month) {
-    case 'jan':
-    case 'mar':
-    case 'may':
-    case 'jul':
-    case 'aug':
-    case 'oct':
-    case 'dec':
+    case 'January':
+    case 'March':
+    case 'May':
+    case 'July':
+    case 'August':
+    case 'October':
+    case 'December':
       return 31;
 
-    case 'apr':
-    case 'jun':
-    case 'sep':
-    case 'nov':
+    case 'April':
+    case 'June':
+    case 'September':
+    case 'November':
       return 30;
 
-    case 'feb': {
+    case 'February': {
       if (isLeapYear(year)) {
         return 29;
       }

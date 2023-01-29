@@ -1,0 +1,23 @@
+.table {
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  display: flex;
+  flex-wrap: wrap;
+  width: #{$calendar-width};
+
+  $days:
+  "0" 0,
+  "1" #{$cell-width},
+  "2" #{$cell-width * 2},
+  "3" #{$cell-width * 3},
+  "4" #{$cell-width * 4},
+  "5" #{$cell-width * 5},
+  "6" #{$cell-width * 6};
+
+@each $day, $start in $days {
+  &--start-day-#{$day} > &__cell:first-child {
+    margin-left: #{$start};
+  }
+}
+}

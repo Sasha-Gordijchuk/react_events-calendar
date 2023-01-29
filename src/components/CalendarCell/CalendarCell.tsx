@@ -1,9 +1,11 @@
 import React from 'react';
 
-export const CalendarCell: React.FC = () => {
+interface Props {
+  day: number
+}
+
+export const CalendarCell: React.FC<Props> = ({ day }) => {
   return (
-    <div>
-      Cell
-    </div>
+    <td className="table__cell cell">{day}</td>
   );
 };

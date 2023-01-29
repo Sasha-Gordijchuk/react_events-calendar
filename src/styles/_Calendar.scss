@@ -1,0 +1,29 @@
+.calendar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.header {
+  display: flex; 
+  flex-direction: row;
+  justify-content: space-between;
+  width: #{$calendar-width};
+
+  padding: 0 50px;
+
+  &__add-button{
+    background-color: aquamarine;
+  }
+
+  &__month {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__arrow-button{
+    background-color: aqua;
+  }
+}

@@ -1,0 +1,12 @@
+.cell {
+  width: $cell-width;
+  height: $cell-heigh;
+
+  padding: 10px;
+
+  border: 1px solid gray;
+
+  &:hover {
+    background-color: #eee;
+  }
+}

@@ -11,5 +11,9 @@ code {
     monospace;
 }
 
-@import './styles/_normalize.css';
-@import './App.css';
+@import './utils/normalize';
+@import './utils/variables';
+@import './App';
+@import './Calendar';
+@import './CalendarTable';
+@import './CalendarCell';
