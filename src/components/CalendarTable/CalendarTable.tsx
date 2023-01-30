@@ -28,13 +28,25 @@ export const CalendarTable: React.FC<Props> = ({
   }
 
   return (
-    <table className={`table table--start-day-${getStartDay(currentMonth, currentYear)}`}>
-      {days.map(day => (
-        <CalendarCell
-          key={day}
-          day={day}
-        />
-      ))}
-    </table>
+    <div className="table">
+      <div className="table__head">
+        <p className="table__day">Monday</p>
+        <p className="table__day">Tuesday</p>
+        <p className="table__day">Wednesday</p>
+        <p className="table__day">Thurstday</p>
+        <p className="table__day">Friday</p>
+        <p className="table__day">Saturnday</p>
+        <p className="table__day">Sunday</p>
+      </div>
+      <div className={`table__body table__body--start-day-${getStartDay(currentMonth, currentYear)}`}>
+        {days.map(day => (
+          <CalendarCell
+            key={day}
+            day={day}
+          />
+        ))}
+
+      </div>
+    </div>
   );
 };

@@ -31,12 +31,12 @@ export const Calendar: React.FC = () => {
       <div className="calendar__header header">
         <button
           type="button"
-          className="header__add-button"
+          className="button is-info"
         >
           +
         </button>
 
-        <div className="header__month">
+        <div className="header__months-switcher">
           <button
             type="button"
             className="header__arrow-button"
@@ -44,7 +44,7 @@ export const Calendar: React.FC = () => {
           >
             {'<'}
           </button>
-          <p>
+          <p className="header__corrent-mounth">
             {`${getStringMonth(currentMonth)} ${currentYear}`}
           </p>
           <button

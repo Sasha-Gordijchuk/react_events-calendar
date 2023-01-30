@@ -2,11 +2,19 @@
   width: $cell-width;
   height: $cell-heigh;
 
-  padding: 10px;
+  position: relative;
 
   border: 1px solid gray;
 
   &:hover {
     background-color: #eee;
+  }
+
+  &__number {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+
+    font-weight: 700;
   }
 }

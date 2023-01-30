@@ -6,6 +6,8 @@ interface Props {
 
 export const CalendarCell: React.FC<Props> = ({ day }) => {
   return (
-    <td className="table__cell cell">{day}</td>
+    <div className="table__cell cell">
+      <p className="cell__number">{day}</p>
+    </div>
   );
 };
