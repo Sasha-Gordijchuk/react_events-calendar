@@ -1,14 +1,16 @@
 /* eslint-disable max-len */
 /* eslint-disable no-console */
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { getStringMonth } from '../../utils/getStringMonth';
 import { CalendarTable } from '../CalendarTable';
+import { NewEvent } from '../EventForm';
 
 export const Calendar: React.FC = () => {
   const today = new Date(Date.now());
   const [currentMonth, setCurrentMonth] = useLocalStorage('month', today.getMonth());
   const [currentYear] = useLocalStorage('year', today.getFullYear());
+  const [addingFormIsVisible, setAddingFormIsVisible] = useState<boolean>(false);
 
   const handleChangeMonthNext = () => {
     if (currentMonth === 11) {
@@ -26,12 +28,15 @@ export const Calendar: React.FC = () => {
     }
   };
 
+  console.log(addingFormIsVisible);
+
   return (
     <div className="calendar">
       <div className="calendar__header header">
         <button
           type="button"
-          className="button is-info"
+          className="button is-info is-rounded"
+          onClick={() => setAddingFormIsVisible(true)}
         >
           +
         </button>
@@ -39,17 +44,17 @@ export const Calendar: React.FC = () => {
         <div className="header__months-switcher">
           <button
             type="button"
-            className="header__arrow-button"
+            className="button is-black is-inverted"
             onClick={() => handleChangeMonthPrev()}
           >
             {'<'}
           </button>
-          <p className="header__corrent-mounth">
+          <p className="header__current-mounth">
             {`${getStringMonth(currentMonth)} ${currentYear}`}
           </p>
           <button
             type="button"
-            className="header__arrow-button"
+            className="button is-black is-inverted"
             onClick={() => handleChangeMonthNext()}
           >
             {'>'}
@@ -62,6 +67,14 @@ export const Calendar: React.FC = () => {
         currentMonth={currentMonth}
         currentYear={currentYear}
       />
+
+      {
+        addingFormIsVisible && (
+          <NewEvent
+            setAddingFormIsVisible={setAddingFormIsVisible}
+          />
+        )
+      }
     </div>
   );
 };

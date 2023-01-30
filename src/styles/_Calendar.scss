@@ -21,13 +21,10 @@
   &__months-switcher {
     display: flex;
     flex-direction: row;
+    align-items: center;
   }
 
-  &__arrow-button {
-    background-color: aqua;
-  }
-
-  &__corrent-mounth {
+  &__current-mounth {
     width: 120px;
     text-align: center;
   }
