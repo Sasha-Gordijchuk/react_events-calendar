@@ -14,10 +14,6 @@
 
   padding: 0 50px;
 
-  &__add-button{
-    background-color: aquamarine;
-  }
-
   &__months-switcher {
     display: flex;
     flex-direction: row;
@@ -27,5 +23,9 @@
   &__current-mounth {
     width: 120px;
     text-align: center;
+  }
+
+  &__month-input {
+    width: 53px;
   }
 }

@@ -4,17 +4,43 @@
 
   position: relative;
 
+
   border: 1px solid gray;
 
-  &:hover {
+  &--today {
     background-color: #eee;
   }
 
   &__number {
     position: absolute;
-    left: 10px;
-    top: 10px;
+    left: 4px;
+    top: 4px;
 
+    font-size: 14px;
     font-weight: 700;
+  }
+
+  &__day-name {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  &__events {
+    padding: 5px 26px;
+  }
+
+  &__event {
+    margin-bottom: 4px;
+    background-color: #ccc;
+
+    cursor: pointer;
+
+    &:hover {
+      background-color: #bbb;
+    }
   }
 }

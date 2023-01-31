@@ -4,12 +4,12 @@ import React, { useState } from 'react';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { getStringMonth } from '../../utils/getStringMonth';
 import { CalendarTable } from '../CalendarTable';
-import { NewEvent } from '../EventForm';
+import { EventForm } from '../EventForm';
 
 export const Calendar: React.FC = () => {
   const today = new Date(Date.now());
   const [currentMonth, setCurrentMonth] = useLocalStorage('month', today.getMonth());
-  const [currentYear] = useLocalStorage('year', today.getFullYear());
+  const [currentYear, setCurrentYear] = useLocalStorage('year', today.getFullYear());
   const [addingFormIsVisible, setAddingFormIsVisible] = useState<boolean>(false);
 
   const handleChangeMonthNext = () => {
@@ -28,7 +28,10 @@ export const Calendar: React.FC = () => {
     }
   };
 
-  console.log(addingFormIsVisible);
+  const handleChangeMonth = (event: any) => {
+    setCurrentMonth((+event.target.value.slice(5)) - 1);
+    setCurrentYear(+event.target.value.slice(0, 4));
+  };
 
   return (
     <div className="calendar">
@@ -59,6 +62,12 @@ export const Calendar: React.FC = () => {
           >
             {'>'}
           </button>
+
+          <input
+            type="month"
+            className="button header__month-input"
+            onChange={(event) => handleChangeMonth(event)}
+          />
         </div>
       </div>
 
@@ -70,7 +79,7 @@ export const Calendar: React.FC = () => {
 
       {
         addingFormIsVisible && (
-          <NewEvent
+          <EventForm
             setAddingFormIsVisible={setAddingFormIsVisible}
           />
         )
