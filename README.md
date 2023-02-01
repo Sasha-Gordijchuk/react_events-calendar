@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Events Calendar
 
   - [DEMO](https://sasha-gordijchuk.github.io/react_events-calendar/)
   
