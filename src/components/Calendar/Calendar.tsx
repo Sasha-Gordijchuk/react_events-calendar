@@ -10,6 +10,7 @@ export const Calendar: React.FC = () => {
   const today = new Date(Date.now());
   const [currentMonth, setCurrentMonth] = useLocalStorage('month', today.getMonth());
   const [currentYear, setCurrentYear] = useLocalStorage('year', today.getFullYear());
+  const [events, setEvents] = useLocalStorage('events');
   const [addingFormIsVisible, setAddingFormIsVisible] = useState<boolean>(false);
 
   const handleChangeMonthNext = () => {
@@ -75,6 +76,8 @@ export const Calendar: React.FC = () => {
         today={today}
         currentMonth={currentMonth}
         currentYear={currentYear}
+        events={events}
+        setEvents={setEvents}
       />
 
       {
@@ -82,6 +85,8 @@ export const Calendar: React.FC = () => {
           <EventForm
             event={null}
             setFormIsVisible={setAddingFormIsVisible}
+            events={events}
+            setEvents={setEvents}
           />
         )
       }

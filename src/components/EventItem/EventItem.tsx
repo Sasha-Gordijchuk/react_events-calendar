@@ -6,9 +6,15 @@ import { EventForm } from '../EventForm';
 
 interface Props {
   event: IEvent
+  events: IEvent[]
+  setEvents: (value: IEvent[]) => void
 }
 
-export const EventItem: React.FC<Props> = ({ event }) => {
+export const EventItem: React.FC<Props> = ({
+  event,
+  events,
+  setEvents,
+}) => {
   const [editFormIsVisible, setEditFormIsVisible] = useState<boolean>(false);
 
   const handleEdit = () => {
@@ -32,6 +38,8 @@ export const EventItem: React.FC<Props> = ({ event }) => {
           <EventForm
             event={event}
             setFormIsVisible={setEditFormIsVisible}
+            events={events}
+            setEvents={setEvents}
           />
         )}
     </>

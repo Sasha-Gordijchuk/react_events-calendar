@@ -11,6 +11,9 @@ interface Props {
   day: number,
   month: number,
   year: number,
+  eventsOnThisDay: IEvent[],
+  events: IEvent[]
+  setEvents: (value: IEvent[]) => void
 }
 
 export const CalendarCell: React.FC<Props> = ({
@@ -18,32 +21,18 @@ export const CalendarCell: React.FC<Props> = ({
   day,
   month,
   year,
+  eventsOnThisDay,
+  events,
+  setEvents,
 }) => {
-  const [events] = useLocalStorage('events');
   const [date, setDate] = useState<Date>(new Date(year, month, day));
   const [isToday, setIsToday] = useState<boolean>(false);
-  const [filtredEvents, setFiltredEvents] = useState([]);
-
-  const filter = (array: never[]) => {
-    if (array) {
-      const filtredArray = array.filter((item: any) => (
-        item.date === normalizeDate(date)));
-
-      return filtredArray;
-    }
-
-    return [];
-  };
 
   useEffect(() => {
     setDate(new Date(year, month, day));
   }, [month, year]);
 
   useEffect(() => {
-    const filtredEv = filter(events);
-
-    setFiltredEvents(filtredEv);
-
     if (date
       && (today.toString().slice(0, 15) === date.toString().slice(0, 15))
     ) {
@@ -58,12 +47,14 @@ export const CalendarCell: React.FC<Props> = ({
       ? 'table__cell cell cell--today'
       : 'table__cell cell'}
     >
-      {filtredEvents && (
+      {eventsOnThisDay && (
         <div className="cell__events">
-          {filtredEvents.map((event: IEvent) => (
+          {eventsOnThisDay.map((event: IEvent) => (
             <EventItem
               key={event.id}
               event={event}
+              events={events}
+              setEvents={setEvents}
             />
 
           ))}

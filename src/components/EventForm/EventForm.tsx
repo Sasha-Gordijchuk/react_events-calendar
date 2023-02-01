@@ -1,23 +1,25 @@
 /* eslint-disable no-console */
 import React, { useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { IEvent } from '../../types/event';
 
 interface Props {
   event: IEvent | null
   setFormIsVisible: (value: boolean) => void
+  events: IEvent[]
+  setEvents: (value: IEvent[]) => void
 }
 
 export const EventForm: React.FC<Props> = ({
   event,
   setFormIsVisible,
+  events,
+  setEvents,
 }) => {
   const titleField = useRef<HTMLInputElement>(null);
   const descriptionField = useRef<HTMLTextAreaElement>(null);
   const dateField = useRef<HTMLInputElement>(null);
   const timeField = useRef<HTMLInputElement>(null);
-  const [events, setEvents] = useLocalStorage('events', []);
   const [isTitleError, setIsTitleError] = useState<boolean>(false);
   const [isDateError, setIsDateError] = useState<boolean>(false);
 
