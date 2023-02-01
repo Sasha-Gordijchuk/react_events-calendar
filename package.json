@@ -1,5 +1,6 @@
 {
   "name": "react_events-calendar",
+  "homepage": "https://Sasha-Gordijchuk.github.io/react_events-calendar",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -26,6 +27,7 @@
     "eslint-plugin-react": "^7.31.11"
   },
   "scripts": {
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
