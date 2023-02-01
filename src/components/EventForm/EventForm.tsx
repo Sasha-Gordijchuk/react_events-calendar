@@ -1,12 +1,15 @@
 /* eslint-disable no-console */
 import React, { useRef, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { IEvent } from '../../types/event';
 
 interface Props {
-  setAddingFormIsVisible: (value: boolean) => void
+  setFormIsVisible: (value: boolean) => void
+  event: IEvent | null
 }
 
-export const EventForm: React.FC<Props> = ({ setAddingFormIsVisible }) => {
+export const EventForm: React.FC<Props> = ({ setFormIsVisible, event }) => {
   const titleField = useRef<HTMLInputElement>(null);
   const descriptionField = useRef<HTMLTextAreaElement>(null);
   const dateField = useRef<HTMLInputElement>(null);
@@ -30,6 +33,7 @@ export const EventForm: React.FC<Props> = ({ setAddingFormIsVisible }) => {
     }
 
     const newEvent = {
+      id: uuidv4(),
       title: titleField.current?.value,
       description: descriptionField.current?.value,
       date: dateField.current?.value,
@@ -38,11 +42,9 @@ export const EventForm: React.FC<Props> = ({ setAddingFormIsVisible }) => {
       updatedAt: null,
     };
 
-    console.log(newEvent);
-
     setEvents([...events, newEvent]);
 
-    setAddingFormIsVisible(false);
+    setFormIsVisible(false);
   };
 
   return (
@@ -50,12 +52,16 @@ export const EventForm: React.FC<Props> = ({ setAddingFormIsVisible }) => {
       <div className="modal-background" />
       <div className="modal-card">
         <header className="modal-card-head">
-          <p className="modal-card-title">Add new event</p>
+          <p className="modal-card-title">
+            {event
+              ? 'Edit event'
+              : 'Add new event'}
+          </p>
           <button
             type="button"
             className="delete"
             aria-label="close"
-            onClick={() => setAddingFormIsVisible(false)}
+            onClick={() => setFormIsVisible(false)}
           />
         </header>
         <section className="modal-card-body">
@@ -68,6 +74,7 @@ export const EventForm: React.FC<Props> = ({ setAddingFormIsVisible }) => {
               type="text"
               placeholder="Titile goes here"
               ref={titleField}
+              value={event?.title}
               onChange={() => setIsTitleError(false)}
               required
             />
@@ -75,6 +82,7 @@ export const EventForm: React.FC<Props> = ({ setAddingFormIsVisible }) => {
             <textarea
               className="textarea"
               ref={descriptionField}
+              value={`${event?.description}`}
             />
 
             <div className="datetime">
@@ -86,6 +94,7 @@ export const EventForm: React.FC<Props> = ({ setAddingFormIsVisible }) => {
                     : 'input date-input'}
                   type="date"
                   ref={dateField}
+                  value={event?.date}
                   onChange={() => setIsDateError(false)}
                   required
                 />
@@ -97,6 +106,7 @@ export const EventForm: React.FC<Props> = ({ setAddingFormIsVisible }) => {
                   className="input time-input"
                   type="time"
                   ref={timeField}
+                  value={event?.date}
                 />
               </div>
 
@@ -111,10 +121,19 @@ export const EventForm: React.FC<Props> = ({ setAddingFormIsVisible }) => {
           >
             Save changes
           </button>
+          {event
+            && (
+              <button
+                type="button"
+                className="button is-danger"
+              >
+                Delete event
+              </button>
+            )}
           <button
             type="button"
             className="button"
-            onClick={() => setAddingFormIsVisible(false)}
+            onClick={() => setFormIsVisible(false)}
           >
             Cancel
           </button>

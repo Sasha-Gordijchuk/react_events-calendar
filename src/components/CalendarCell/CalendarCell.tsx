@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { IEvent } from '../../types/event';
 import { normalizeDate } from '../../utils/normalizeDate';
+import { EventItem } from '../EventItem';
 
 interface Props {
   today: Date,
@@ -18,16 +18,20 @@ export const CalendarCell: React.FC<Props> = ({
   month,
   year,
 }) => {
-  const [isToday, setIsToday] = useState<boolean>(false);
-  const [date, setDate] = useState<Date>(new Date(year, month, day));
   const [events] = useLocalStorage('events');
+  const [date, setDate] = useState<Date>(new Date(year, month, day));
+  const [isToday, setIsToday] = useState<boolean>(false);
   const [filtredEvents, setFiltredEvents] = useState([]);
 
   const filter = (array: never[]) => {
-    const filtredArray = array.filter((item: any) => (
-      item.date === normalizeDate(date)));
+    if (array) {
+      const filtredArray = array.filter((item: any) => (
+        item.date === normalizeDate(date)));
 
-    return filtredArray;
+      return filtredArray;
+    }
+
+    return [];
   };
 
   useEffect(() => {
@@ -45,7 +49,7 @@ export const CalendarCell: React.FC<Props> = ({
     ) {
       setIsToday(true);
     }
-  }, [month, year]);
+  }, []);
 
   return (
     <div className={isToday
@@ -54,8 +58,12 @@ export const CalendarCell: React.FC<Props> = ({
     >
       {filtredEvents && (
         <div className="cell__events">
-          {filtredEvents.map((event: any) => (
-            <p className="cell__event">{event.title}</p>
+          {filtredEvents.map((event: IEvent) => (
+            <EventItem
+              key={event.id}
+              event={event}
+            />
+
           ))}
         </div>
       )}
