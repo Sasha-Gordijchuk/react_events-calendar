@@ -5,17 +5,19 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { IEvent } from '../../types/event';
 
 interface Props {
-  setFormIsVisible: (value: boolean) => void
   event: IEvent | null
+  setFormIsVisible: (value: boolean) => void
 }
 
-export const EventForm: React.FC<Props> = ({ setFormIsVisible, event }) => {
+export const EventForm: React.FC<Props> = ({
+  event,
+  setFormIsVisible,
+}) => {
   const titleField = useRef<HTMLInputElement>(null);
   const descriptionField = useRef<HTMLTextAreaElement>(null);
   const dateField = useRef<HTMLInputElement>(null);
   const timeField = useRef<HTMLInputElement>(null);
   const [events, setEvents] = useLocalStorage('events', []);
-
   const [isTitleError, setIsTitleError] = useState<boolean>(false);
   const [isDateError, setIsDateError] = useState<boolean>(false);
 
@@ -32,17 +34,39 @@ export const EventForm: React.FC<Props> = ({ setFormIsVisible, event }) => {
       return;
     }
 
-    const newEvent = {
+    const newEvent: IEvent = {
       id: uuidv4(),
-      title: titleField.current?.value,
-      description: descriptionField.current?.value,
-      date: dateField.current?.value,
-      time: timeField.current?.value,
+      title: titleField.current?.value || '',
+      description: descriptionField.current?.value || '',
+      date: dateField.current?.value || '',
+      time: timeField.current?.value || '',
       createdAt: Date.now(),
       updatedAt: null,
     };
 
-    setEvents([...events, newEvent]);
+    if (event) {
+      newEvent.id = event.id;
+      newEvent.createdAt = event.createdAt;
+      newEvent.updatedAt = Date.now();
+
+      setEvents(events.map((ev: IEvent) => {
+        if (ev.id === newEvent.id) {
+          return newEvent;
+        }
+
+        return ev;
+      }));
+    } else {
+      setEvents([...events, newEvent]);
+    }
+
+    setFormIsVisible(false);
+  };
+
+  const handleDelete = () => {
+    if (event) {
+      setEvents(events.filter((ev: IEvent) => ev.id !== event.id));
+    }
 
     setFormIsVisible(false);
   };
@@ -74,7 +98,7 @@ export const EventForm: React.FC<Props> = ({ setFormIsVisible, event }) => {
               type="text"
               placeholder="Titile goes here"
               ref={titleField}
-              value={event?.title}
+              defaultValue={event?.title}
               onChange={() => setIsTitleError(false)}
               required
             />
@@ -82,7 +106,8 @@ export const EventForm: React.FC<Props> = ({ setFormIsVisible, event }) => {
             <textarea
               className="textarea"
               ref={descriptionField}
-              value={`${event?.description}`}
+              defaultValue={`${event?.description || ' '}`}
+              onChange={() => descriptionField}
             />
 
             <div className="datetime">
@@ -94,7 +119,7 @@ export const EventForm: React.FC<Props> = ({ setFormIsVisible, event }) => {
                     : 'input date-input'}
                   type="date"
                   ref={dateField}
-                  value={event?.date}
+                  defaultValue={event?.date}
                   onChange={() => setIsDateError(false)}
                   required
                 />
@@ -106,7 +131,7 @@ export const EventForm: React.FC<Props> = ({ setFormIsVisible, event }) => {
                   className="input time-input"
                   type="time"
                   ref={timeField}
-                  value={event?.date}
+                  defaultValue={event?.time}
                 />
               </div>
 
@@ -126,6 +151,7 @@ export const EventForm: React.FC<Props> = ({ setFormIsVisible, event }) => {
               <button
                 type="button"
                 className="button is-danger"
+                onClick={() => handleDelete()}
               >
                 Delete event
               </button>

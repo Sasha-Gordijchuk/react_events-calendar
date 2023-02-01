@@ -80,8 +80,8 @@ export const Calendar: React.FC = () => {
       {
         addingFormIsVisible && (
           <EventForm
-            setFormIsVisible={setAddingFormIsVisible}
             event={null}
+            setFormIsVisible={setAddingFormIsVisible}
           />
         )
       }

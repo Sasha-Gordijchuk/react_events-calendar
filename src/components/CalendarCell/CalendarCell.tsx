@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
@@ -35,21 +36,22 @@ export const CalendarCell: React.FC<Props> = ({
   };
 
   useEffect(() => {
+    setDate(new Date(year, month, day));
+  }, [month, year]);
+
+  useEffect(() => {
     const filtredEv = filter(events);
 
     setFiltredEvents(filtredEv);
-    setDate(new Date(year, month, day));
 
-    console.log(filtredEvents);
-  }, []);
-
-  useEffect(() => {
     if (date
       && (today.toString().slice(0, 15) === date.toString().slice(0, 15))
     ) {
       setIsToday(true);
+    } else {
+      setIsToday(false);
     }
-  }, []);
+  }, [date]);
 
   return (
     <div className={isToday
