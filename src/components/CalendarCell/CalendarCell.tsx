@@ -1,9 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { IEvent } from '../../types/event';
-import { normalizeDate } from '../../utils/normalizeDate';
 import { EventItem } from '../EventItem';
 
 interface Props {

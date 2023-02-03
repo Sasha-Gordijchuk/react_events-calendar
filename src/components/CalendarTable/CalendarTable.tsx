@@ -1,8 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-plusplus */
-/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { IEvent } from '../../types/event';
 import { getDaysInMonth } from '../../utils/getDaysInMonth';
 import { getStartDay } from '../../utils/getStartDay';
