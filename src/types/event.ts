@@ -4,6 +4,6 @@ export interface IEvent {
   description: string | null;
   date: string;
   time: string;
-  createdAt: number;
-  updatedAt: number | null;
+  createdAt: Date;
+  updatedAt: Date | null;
 }

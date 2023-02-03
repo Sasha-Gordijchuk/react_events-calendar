@@ -2,6 +2,7 @@
 import React, { useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { IEvent } from '../../types/event';
+import { normalizeDate } from '../../utils/normalizeDate';
 
 interface Props {
   event: IEvent | null
@@ -42,14 +43,14 @@ export const EventForm: React.FC<Props> = ({
       description: descriptionField.current?.value || '',
       date: dateField.current?.value || '',
       time: timeField.current?.value || '',
-      createdAt: Date.now(),
+      createdAt: new Date(Date.now()),
       updatedAt: null,
     };
 
     if (event) {
       newEvent.id = event.id;
       newEvent.createdAt = event.createdAt;
-      newEvent.updatedAt = Date.now();
+      newEvent.updatedAt = new Date(Date.now());
 
       setEvents(events.map((ev: IEvent) => {
         if (ev.id === newEvent.id) {
@@ -78,11 +79,21 @@ export const EventForm: React.FC<Props> = ({
       <div className="modal-background" />
       <div className="modal-card">
         <header className="modal-card-head">
-          <p className="modal-card-title">
-            {event
-              ? 'Edit event'
-              : 'Add new event'}
-          </p>
+          <div className="modal-card-title">
+            <p>
+              {event
+                ? 'Edit event'
+                : 'Add new event'}
+            </p>
+            {(event)
+              && (
+                <p className="subtitle is-6">
+                  {event.updatedAt
+                    ? `Updated at: ${normalizeDate(event.updatedAt, true)}`
+                    : `Created at: ${normalizeDate(event.createdAt, true)}`}
+                </p>
+              )}
+          </div>
           <button
             type="button"
             className="delete"
